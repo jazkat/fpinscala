@@ -4,6 +4,7 @@ import Keys._
 object FPInScalaBuild extends Build {
   val opts = Project.defaultSettings ++ Seq(
     scalaVersion := "2.11.7",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test",
     resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
   )
 
