@@ -346,4 +346,37 @@ class ListSpec extends WordSpec {
       assert(zipWith(List(3), List(1,2,3))(add) == List(4))
     }
   }
+
+  "HasSubsequence" should {
+    "return true for empty list and empty subsequence" in {
+      assert(hasSubsequence(Nil, Nil))
+    }
+    "return false for empty list and non-empty subsequence" in {
+      assert(!hasSubsequence(Nil, List(1,2)))
+    }
+    "return true for non-empty list and empty subsequence" in {
+      assert(hasSubsequence(List(1,2),Nil))
+    }
+    "return true for matching list and subsequence of length 1" in {
+      assert(hasSubsequence(List(5),List(5)))
+    }
+    "return false for not matching list and subsequence of length 1" in {
+      assert(!hasSubsequence(List(5),List(1)))
+    }
+    "return true for list length > 1 that contains subsequence of length 1" in {
+      assert(hasSubsequence(List(1,2,3),List(3)))
+    }
+    "return false for list whose length is shorter than subsequence length" in {
+      assert(!hasSubsequence(List(1,2),List(1,2,3)))
+    }
+    "return true for matching list and subsequence of length > 1" in {
+      assert(hasSubsequence(List(1,2,3),List(1,2,3)))
+    }
+    "return true for list length > 1 that contains subsequence of length > 1" in {
+      assert(hasSubsequence(List(1,2,3,4),List(2,3)))
+    }
+    "return true for list length > 1 that contains subsequence of length > 1 and requires backtracking" in {
+      assert(hasSubsequence(List(1,2,3,1,2,3,4,5),List(1,2,3,4)))
+    }
+  }
 }

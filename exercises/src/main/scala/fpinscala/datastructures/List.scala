@@ -160,14 +160,21 @@ object List { // `List` companion object. Contains functions for creating and wo
     }
   }
 
+  @annotation.tailrec
+  def startsWith[A](l: List[A], sub: List[A]): Boolean = {
+    (l, sub) match {
+      case (_, Nil) => true
+      case (Cons(h,t),Cons(subh,subt)) => if (h == subh) startsWith(t, subt) else false
+      case _ => false
+    }
+  }
+
+  @annotation.tailrec
   def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
     (sup, sub) match {
       case (Nil, _) => sub == Nil
       case (_, Nil) => true
-      case (Cons(h,t), Cons(subh,subt)) =>
-        // this is meant to be backtracking. TODO need lots of tests to see if this works
-        if (h == subh && hasSubsequence(t,subt)) true
-        else hasSubsequence(t,sub)
+      case (Cons(h,t), Cons(subh,subt)) => if (startsWith(sup, sub)) true else hasSubsequence(t,sub)
     }
   }
 }
